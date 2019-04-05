@@ -87,7 +87,19 @@ in.collapse+a.btn.showdetails:before { content:'Hide details'; }
               ('Exercise 6: 2. ordens Runge Kutta metode (Utfordring)',
                2,
                None,
-               '___sec17')]}
+               '___sec17'),
+              ('Modellering: Differensiallikninger i fysikk',
+               0,
+               None,
+               '___sec18'),
+              ('Oppstilling av oppgaver i fysikk', 2, None, '___sec19'),
+              ('Eksempel', 3, None, '___sec20'),
+              ('Exercise 7: Fall med luftmotstand', 2, None, '___sec21'),
+              ('Exercise 8: Strikkhopp', 2, None, '___sec22'),
+              ('Exercise 9: Fritt fall fra verdensrommet',
+               2,
+               None,
+               '___sec23')]}
 end of tocinfo -->
 
 <body>
@@ -127,6 +139,7 @@ MathJax.Hub.Config({
         <ul class="dropdown-menu">
      <!-- navigation toc: --> <li><a href="#table_of_contents" style="font-size: 80%;">Table of contents</a></li>
      <!-- navigation toc: --> <li><a href="#___sec0" style="font-size: 80%;">Kapittel 3: Numeriske metoder intro</a></li>
+     <!-- navigation toc: --> <li><a href="#___sec18" style="font-size: 80%;">Modellering: Differensiallikninger i fysikk</a></li>
 
         </ul>
       </li>
@@ -159,7 +172,7 @@ MathJax.Hub.Config({
 
 <br>
 <p>
-<center><h4>Apr 1, 2019</h4></center> <!-- date -->
+<center><h4>Apr 5, 2019</h4></center> <!-- date -->
 <br>
 <center>
 <img src="https://www.ntbinfo.no/data/images/00262/9a718cca-1f1f-4eba-b745-02b3157c0282-w_300_h_100.png" height="100">
@@ -179,6 +192,7 @@ MathJax.Hub.Config({
 &nbsp; &nbsp; &nbsp; <a href="#___sec2"> Eulers metode </a><br>
 &nbsp; &nbsp; &nbsp; <a href="#___sec5"> Differensiallikninger: Numerisk i python </a><br>
 &nbsp; &nbsp; &nbsp; <a href="#___sec11"> Oppgaver </a><br>
+<a href="#___sec18"> Modellering: Differensiallikninger i fysikk </a><br>
 </p>
 <p>
 
@@ -952,7 +966,7 @@ Korrekt l&#248;sning: \( f(x) = 2x\left(\sqrt{x}+1\right) \)
 \[
 y + y' = \sin x,\quad x_{0} = 0, y_{0} = 0
 \]
-Korrekt l&#248;sning: \( f(x) = \frac{1}{2}(\sin x - \cos x - e^{-x}) \)
+Korrekt l&#248;sning: \( f(x) = \frac{1}{2}(\sin x - \cos x + e^{-x}) \)
 
 <p>
 <b>c)</b>
@@ -1070,6 +1084,262 @@ Bruk likningene over til &#229; skrive et program som l&#248;ser differensiallik
 <p>
 <b>b)</b>
 Lag et program som inneholder kun <b>&#233;n</b> funksjon som lar brukeren velge hvilken metode (Euler, Euler-Cromer, 2. ordens Runge Kutta) som skal bli brukt til &#229; l&#248;se differensiallikningen.
+
+<p>
+<!-- --- end exercise --- -->
+
+<p>
+
+<center><h1 id="___sec18" class="anchor">Modellering: Differensiallikninger i fysikk </h1></center> <!-- chapter heading -->
+Det er fint &#229; kunne l&#248;se differensiallikninger i matematikk, men anvendelsen av teorien i forrige kapittel er kanskje fundamentet for moderne forskning. Vi har kommet til et punkt i vitenskapen hvor det som kan l&#248;ses for h&#229;nd er l&#248;st, det er tross alt ikke lenge siden i et historisk perspektiv at vi fikk datamaskinene. S&#229; langt i kurset har du allerede l&#248;st integraler og differensiallikninger som ikke er l&#248;sbare for h&#229;nd. <br />
+<br />
+I denne delen skal vi se p&#229; hvordan vi kan modellere fysiske systemer med bruk av Newtons andre lov. F&#248;rst trenger vi noen omskrivninger.
+
+<p>
+<div class="alert alert-block alert-success alert-text-normal"><b>Differensiallikninger i fysikk.</b>
+$$
+\begin{align*}
+y'' &\rightarrow a\\
+y' &\rightarrow v\\
+y &\rightarrow s\\
+x&\rightarrow t\\
+\end{align*}
+$$
+
+Hvor \( s \) er posisjonen til objektet, \( v \) er farten til objektet og \( a \) er aksellerasjonen til objektet.
+</div>
+
+Som du kanskje har innsett n&#229;, s&#229; er det slik at den deriverte av posisjon er fart, og den deriverte av fart er aksellerasjon. Vi kan skrive dette som:
+
+$$
+\begin{align*}
+v(t)&=s'(t)\\
+a(t) &= v'(t) = s''(t)
+\end{align*}
+$$
+
+<p>
+For &#229; sette opp differensiallikninger i fysikk bruker vi newtons andre lov, denne skrives slik:
+<div class="alert alert-block alert-success alert-text-normal"><b>Newtons 2. lov (N2L).</b>
+Newtons 2. lov sier at summen av kreftene som virker p&#229; et objekt er tilsvarende produktet av massen \( m \) og aksellerasjonen \( a \).  Matematisk skriver vi:
+\[
+ ma = \sum F
+\]
+</div>
+
+
+<p>
+S&#229; hva er en kraft? En kraft er noe som endrer bevegelsen til et objekt. N&#229;r vi l&#248;fter en kopp endrer vi bevegelsen fra "i ro" til "oppover". N&#229;r noe faller virker tyngdekraften slik at det som faller faller fortere og fortere, alts&#229; g&#229;r bevegelsen fra "fall" til "raskere fall". Disse kreftene er mulige &#229; skrive med matematiske formler, la oss se p&#229; en liste med typiske krefter vi m&#248;ter i fysikk:
+
+<p>
+<div class="alert alert-block alert-success alert-text-normal"><b>Typiske krefter i fysikk.</b>
+Alle krefter m&#229;les i enheten "N" (Newtons). Vi har at 1N = 1 kgm/s \( ^{2} \)
+
+<ul>
+<li> Tyngdekraft ved jordens overflate: \( G=mg \)</li>
+
+<ul>
+  <li> \( g = 9.81\text{ m/s}^{2} \) er tyngdeaksellerasjonen.</li>
+  <li> \( m \) er massen til objektet i kilogram (kg).</li>
+</ul>
+
+<li> Line&#230;r luftmotstand: \( L = -k\cdot v \)</li>
+
+<ul>
+  <li> \( v \) er farten til i objektet i m/s</li>
+  <li> \( k \) er en konstant som varierer utifra om vi beveger oss gjennom luft, vann og hva slags form det er p&#229; objektet som beveger seg.</li>
+  <li> Minusen kommer fra at kraften virker i motsatt retning av fartsretningen.</li>
+  <li> Kvadratisk luftmotstand</li>
+  <li> \( L = -Dv^{2} \)</li>
+  <li> \( v \) er farten til objektet i m/s.</li>
+  <li> \( D \) er en konstant som varierer utifra om vi beveger oss gjennom luft, vann og hva slags form det er p&#229; objektet som beveger seg.</li>
+</ul>
+
+<li> Fj&#230;rkraft:</li>
+
+<ul>
+  <li> F = - ks</li>
+  <li> \( s \) er hvor langt vi har strukket fj&#230;ren.</li>
+  <li> \( k \) er en fj&#230;rkonstant som bestemmer hvor stiv fj&#230;ren er.</li>
+</ul>
+
+<li> Friksjon fra underlag: \( R = \mu N \)</li>
+
+<ul>
+  <li> N er normalkraften og har samme verdi st&#248;rrelse som tyngdekraften. Vi kan skrive \( N=-G=-mg \).</li>
+  <li> \( \mu \) er firksjonskoeffisienten som forteller hvor glatt underlaget er.</li>
+</ul>
+
+</ul>
+</div>
+
+
+<h2 id="___sec19" class="anchor">Oppstilling av oppgaver i fysikk </h2>
+Oppgavene i fysikk krever at vi kan analysere, visualisere og sette opp likninger utifra en tekstbeskrivelse. M&#229;ten vi gj&#248;r dette p&#229; er som f&#248;lger:
+
+<ol>
+<li> Vi bestemmer et startsted for &#229; m&#229;le avstander. I dette punktet er \( s=0 \). Dette kan v&#230;re bakken, et sted i lufta noe slippes fra, forlengelsen til en fj&#230;r som ikke er strukket osv.</li>
+<li> Vi bestemmer oss for en positiv retning. Det er det samme som &#229; si at vi legger en koordinatakse langs bevegelsen. Dersom vi har positiv retning til h&#248;yre, og objektet beveger seg mot h&#248;yre med 3m/s, s&#229; skriver vi \( v=3 \) m/s. Hvis vi har positiv retning mot venstre og objektet beveger seg mot h&#248;yre har vi \( v = -3m/s \) og motsatt.</li>
+<li> Vi noterer ned hvilke startverdier som er oppgitt i teksten.</li>
+<li> Vi identifiserer krefter og bruker N2L til &#229; lage en differensiallikning. Krefter som virker i samme retning som den positive retningen har positivt fortegn, krefter som virker i motsatt retning av den positive retningen har negativt fortegn.</li>
+<li> Vi snur p&#229; likningen som dukker opp slik at \( a \) st&#229;r alene p&#229; venstre side.</li>
+<li> Vi skriver denne likningen inn i programmet og l&#248;ser.</li>
+</ol>
+
+<h3 id="___sec20" class="anchor">Eksempel </h3>
+
+<b>Oppgave:</b>
+<br />
+En fj&#230;r med fj&#230;rkonstanten \( k = 2.0  \) N/m henger i en krok fra taket. I enden av fj&#230;ren har vi plassert et lodd med masse \( m = 0.1 \) kg og loddet henger i ro 0.5 m under taket. Vi strekker s&#229; fj&#230;ren 20 cm nedover og slipper den. Lag en graf som viser bevegelsen til loddet de f&#248;rste 10 sekundene. <br />
+<b>L&#248;sning:</b>
+<br />
+
+<ol>
+<li> Vi setter \( s = 0 \) 0.5 meter under taket slik at vi m&#229;ler avstander ut fra denne retningen.</li>
+<li> Vi lar positiv retning v&#230;re oppover, da er fj&#230;rkraften positiv siden fj&#230;ren trekker loddet oppover, og tyngdekraften negativ siden den trekker loddet nedover.</li>
+<li> Loddet starter 20 cm under der vi har satt \( s = 0 \), alts&#229; er \( s(0) = -0.2 \) cm. Negativt fordi vi er 20 cm under \( s \) = 0.0 og positiv retning er oppover. Startfarten idet vi slipper loddet er 0 m/s nettopp fordi vi holdt det i ro f&#248;r vi slapp. v(0) = 0.0 m/s.</li>
+<li> Vi setter opp N2L. Fj&#230;rkraften er \( F = -ks \) og virker oppover. Tyngdekraften er \( G = mg \) og virker nedover.</li>
+</ol>
+
+$$
+\begin{align*}
+ma &= \sum F\\
+ma &= F - G\\
+ma &= -ks - mg\quad |:m\\
+a&=-\frac{ks}{m}-g
+\end{align*}
+$$
+
+Vi lager et program som regner ut en graf som viser posisjonen til fj&#230;ren som funksjon av tid.
+
+<p>
+
+<!-- code=python (!bc pypro) typeset with pygments style "default" -->
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span></span><span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">pylab</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+
+k <span style="color: #666666">=</span> <span style="color: #666666">2.0</span>
+m <span style="color: #666666">=</span> <span style="color: #666666">0.1</span> kg
+g <span style="color: #666666">=</span> <span style="color: #666666">9.81</span>
+
+t0 <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>
+tslutt <span style="color: #666666">=</span> <span style="color: #666666">10.0</span>
+N <span style="color: #666666">=</span> <span style="color: #666666">5000</span>
+h <span style="color: #666666">=</span> (tslutt <span style="color: #666666">-</span> t0)<span style="color: #666666">/</span>N
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">a</span>(s):
+	<span style="color: #008000; font-weight: bold">return</span> (k<span style="color: #666666">*</span>s)<span style="color: #666666">/</span>m <span style="color: #666666">-</span> g
+
+v <span style="color: #666666">=</span> zeros(N)
+s <span style="color: #666666">=</span> zeros(N)
+t <span style="color: #666666">=</span> zeros(N)
+t[<span style="color: #666666">0</span>] <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+v[<span style="color: #666666">0</span>] <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>
+s[<span style="color: #666666">0</span>] <span style="color: #666666">=</span> <span style="color: #666666">-0.2</span>
+
+<span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">range</span>(N<span style="color: #666666">-1</span>):
+	v[i<span style="color: #666666">+1</span>] <span style="color: #666666">=</span> v[i] <span style="color: #666666">+</span> a(s[i])<span style="color: #666666">*</span>h
+	s[i<span style="color: #666666">+1</span>] <span style="color: #666666">=</span> s[i] <span style="color: #666666">+</span> v[i<span style="color: #666666">+1</span>]<span style="color: #666666">*</span>h
+	t[i<span style="color: #666666">+1</span>] <span style="color: #666666">=</span> t[i] <span style="color: #666666">+</span> h
+
+plot(t,s)
+xlabel(<span style="color: #BA2121">&quot;Tid [s]&quot;</span>)
+ylabel(<span style="color: #BA2121">&quot;Utslag [m]&quot;</span>)
+title(<span style="color: #BA2121">&quot;Pendel i gravitasjonsfelt&quot;</span>)
+</pre></div>
+<p>
+<!-- --- begin exercise --- -->
+
+<h2 id="___sec21" class="anchor">Exercise 7: Fall med luftmotstand </h2>
+
+<p>
+La oss se p&#229; en fallskjermhopper som hopper fra et fly i 3000m h&#248;yde. Vi regner med at det kun er tyngdekraft og luftmotstand som gjelder. I virkeligheten har vi m&#229;lt at en fallskjermhopper har som regel en hastighet p&#229; 55 m/s.
+
+<p>
+<b>a)</b>
+Skriv ned Newtons 2. lov for dette tilfellet.
+
+<p>
+<b>b)</b>
+Lag et program som regner ut farten og posisjonen til fallskjermhopperen dersom han ikke l&#248;ser ut fallskjermen. Juster verdien av \( k \) slik at farten flater ut mot 55 m/s.
+
+<p>
+<b>c)</b>
+Beskriv med ord hvordan posisjonen til fallskjermhopperen endrer seg med tiden for line&#230;r luftmotstand.
+
+<p>
+<b>d)</b>
+Vi antar videre at fallskjermhopperen sl&#229;r ut fallskjermen n&#229;r han er 500 m over bakken. I det dette skjer antar vi at hastigheten forandres &#248;yeblikkelig til 2 m/s. Juster programmet slik at personen daler med 2 m/s resten av turen. Juster <code>tslutt</code> slik at han/hun n&#229;r bakken, omtrentlig hvor lang tid tar fallskjermhoppet?
+
+<p>
+<!-- --- end exercise --- -->
+
+<p>
+<!-- --- begin exercise --- -->
+
+<h2 id="___sec22" class="anchor">Exercise 8: Strikkhopp </h2>
+
+<p>
+I videoen under ser du folk som hopper i strikk i Rjukan.
+
+<iframe width="640" height="365" src="https://www.youtube.com/embed/3Bx2-eIXz54" frameborder="0" allowfullscreen></iframe>
+
+<p><em>Youtube video</em></p>
+
+
+Vi skal n&#229; gj&#248;re en litt forenklet beregning p&#229; en person som hopper i strikk. Vi antar at personen veier 80 kg, strikken har lengde 22 m, fj&#230;rkonstanten er 84. <br />
+For &#229; f&#229; til denne kalkulasjonen gj&#248;r vi noen antakelser:
+
+<ol>
+<li> Personen faller rett nedover og fyker rett oppover.</li>
+<li> Fj&#230;rkraften virker kun n&#229;r personen befinner seg under 22 m fra utgangspunktet.</li>
+<li> Luftmotstanden er line&#230;r med \( k = 1.2 \)</li>
+</ol>
+
+<b>a)</b>
+Skriv ned Newtons 2. lov for den perioden av strikkhoppet f&#248;r strikken strammer (ingen fj&#230;rkraft) og s&#229; skriv samme loven for perioden hvor strikken strammer.
+
+<p>
+<b>b)</b>
+Skriv en funksjon for aksellerasjonen slik at den bytter uttrykk for aksellerasjonen avhengig av om strikken strammer eller ikke.
+
+<p>
+<b>c)</b>
+Lag et program som regner ut og plotter posisjonen og farten til strikkhopperen som funksjon av tid.
+
+<p>
+<b>d)</b>
+Beskriv bevegelsen til strikkhopperen utifra grafene.
+
+<p>
+<!-- --- end exercise --- -->
+
+<p>
+<!-- --- begin exercise --- -->
+
+<h2 id="___sec23" class="anchor">Exercise 9: Fritt fall fra verdensrommet </h2>
+
+<p>
+I en litt surrealistisk verden ser vi for oss at vi jobber p&#229; den internasjonale romstasjonen (ISS) og opplever en katastrofe som gj&#248;r at vi m&#229; forlate romstasjonen ved &#229; hoppe ut. Problemet v&#229;rt er at Jorda har mistet atmosf&#230;ren sin, s&#229; vi har ingenting til &#229; bremse oss p&#229; vei til bakken ettersom fallskjermen ikke fungerer uten luft. (Ikke tenk p&#229; at man egentlig ville ha brent opp i atmosf&#230;ren). I dette tilfellet tar gravitasjonskraften en ny form:
+\[
+G=\gamma\frac{mM}{r^{2}}
+\]
+hvor \( \gamma = 6.67408 \cdot 10^{-11} \) er en konstant, \( m \) = 80 kg er massen til personen som hopper, \( M = 5.972\cdot 10^{24} \) kg er massen til Jorda og \( r \) er avstanden mellom Jordens sentrum og personen som hopper.
+
+<p>
+<b>a)</b>
+Hva er personens avstand til jordens sentrum n&#229;r du f&#229;r vite at jordradien er 6371 km og ISS befinner seg 408 km over jordoverflaten?
+
+<p>
+<b>b)</b>
+Anta at personen holder seg i ro, skriv ned Newtons 2. lov for personen samt startverdiene n&#229;r vi antar at han starter i ro.
+
+<p>
+<b>c)</b>
+Lag et program som plotter hastigheten som funksjon av tid for hoppet. Juster koden slik at l&#248;kken stopper dersom bakken n&#229;es. Tips: bruk <code>break</code>.
+
+<p>
+<b>d)</b>
+Finn ut hva hastigheten til personen er idet han/hun treffer bakken.
 
 <p>
 <!-- --- end exercise --- -->
