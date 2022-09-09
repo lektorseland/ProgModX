@@ -1,0 +1,6 @@
+name: PMX-environment
+channels:
+  - conda-forge
+dependencies:
+  - pylab
+  - random
